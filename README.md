@@ -2,7 +2,7 @@
 
 ## Description
 
-**Text Summarizer** is a desktop application that leverages Natural Language Processing (NLP) techniques to automatically generate concise summaries of input text. The application is designed to help users quickly understand the essence of large documents by providing a distilled version that captures the main points.
+**Text Summarizer** is a desktop application that leverages Natural Language Processing (NLP) techniques to automatically generate concise summaries of input text. The summarizer was implemented on a graphic user interface for easy usage. 
 
 ### How It Works
 
