@@ -9,54 +9,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 #handles system-specific parameters - checks the script directly 
 import sys
-#imports UI elements for widget and broader graphical usage 
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QTextEdit, QLabel
-
-#creates a class that inherits QWidget properties 
-class TextApp(QWidget):
-    #initiliazing a ToDoApp object
-    def __init__(self):
-        #calls the constructor of the parent class - QWidget
-        super().__init__()
-        #Sets the title of the Window
-        self.setWindowTitle("Text-Summarizer")
-        #sets the position (100, 100) of the window and the width (400) and height (300)
-        self.setGeometry(100, 100, 400, 300)
-        
-        #initializes an empty list for tasks
-        self.tasks = []
-
-        #creates a new layout to have the widgets arranged vertically
-        self.layout = QVBoxLayout()
-
-        #creates a text input field - allows for entering text to be summarized
-        self.input_field = QLineEdit()
-        #placeholder text so user knows what to do
-        self.input_field.setPlaceholderText("Enter text to summarize")
-        #creates a button called "Summarize" to start summarization process
-        self.add_button = QPushButton("Summarize")
-        #creates a widget to show the summarized text
-        self.summary = QTextEdit()
-        #summary box is read only so no edits are made
-        self.summary.setReadOnly(True)
-
-        #labels the input box
-        self.layout.addWidget(QLabel("Input Text:"))
-        #adds a widget for entering an input field to the layout
-        self.layout.addWidget(self.input_field)
-        #adds a button to the layout
-        self.layout.addWidget(self.add_button)
-        #labels the summary box
-        self.layout.addWidget(QLabel("Summary:"))
-        #adds a paragraph to the layout
-        self.layout.addWidget(self.summary)
-        
-        #if the add button is clicked then the summary method will be completed
-        self.add_button.clicked.connect(self.summarize_text)
-
-        #sets the layout for the window
-        self.setLayout(self.layout)
-
     #new function to add task to list
     def summarize_text(self):
         #task being handled is the text entered in the input field
@@ -134,17 +86,3 @@ class TextApp(QWidget):
         #the score of the sentence shows how many significant words (non-stopwords) it contains - the higher the score the more significant words it has thus the more significant it is
         #the score is calculated with the word's total frequency because the more frequent the word it is - the more significant it is so it weights the significance of each word in the sentene itself as well
         #the score is taken in context of the average becase it each sentence is 100 words long then a 50 words long sentence is not as significant vs if the average was 10 words long 
-
-            
-#script has to be directly executed not imported
-if __name__ == "__main__":
-    #allows for command-line arguments to be run on PyQt application
-    app = QApplication(sys.argv)
-    #crates an instance of the ToDoApp class
-    window = TextApp()
-    #displays window on the screen
-    window.show()
-    #allowing for the application to start executing
-    sys.exit(app.exec())
-    #returns the exit status 
-    app.exec()
