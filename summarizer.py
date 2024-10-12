@@ -1,18 +1,27 @@
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 #import nltk library which has tools and methods to work with human language data
 import nltk 
 #downloads stopwords and punkt
-nltk.download("stopword")
-nltk.download('punkt')
+nltk.download("stopwords")
+nltk.download('punkt', force=True)
+nltk.download('punkt_tab')
 #imports module to work with stopwords
 from nltk.corpus import stopwords
 #imports module to work with tokens
 from nltk.tokenize import word_tokenize, sent_tokenize
 #handles system-specific parameters - checks the script directly 
 import sys
+
+class TextSummarizer:
+    def __init__(self):
+        # Initialize instance variables
+        self.stop_words = set(stopwords.words("english"))  # Set of stop words
+        self.freqTable = {}  # Dictionary to store word frequencies
+        self.sentenceValue = {}  # Dictionary to store sentence scores
+
     #new function to add task to list
-    def summarize_text(self):
-        #task being handled is the text entered in the input field
-        text = self.input_field.text()
+    def summarize_text(self, text):
 
         #creates a set of all the stopwords in the english language - provided by the nltk modle
         stopWords = set(stopwords.words("english"))
@@ -27,7 +36,7 @@ import sys
             #convers the word to lowercase - to handle casesensitivity 
             word = word.lower()
             #checks if the word is a stopWord
-            if word in stopWords:
+            if word in stopWords and word.isalnum:
                 #doesn't count the word/do anything
                 continue
             #if the word is alreadu in the freqTable
@@ -68,19 +77,16 @@ import sys
         if len(sentenceValue) == 0:
             average = 0
         else:
-            average = int(sumValues/ len(sentenceValue))
+            average = sumValues/ len(sentenceValue) if sentenceValue else 0
 
         #creates an empty string to sore the summary
         summary = ''
-        #loops each sentence in the tokenized sentences list
-        for sentence in sentences:
-            #if sentence in sentence value table and the sentence score is greater than 1.2 times the average 
-            if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.2*average)):
-                #adds the sentence to the summary
-                summary += " " + sentence
 
-        #sets the summary widget to the generated summary text
-        self.summary.setText(summary)
+        summarized_sentences = sorted(sentenceValue, key=sentenceValue.get, reverse=True)[:3]
+        for sentence in summarized_sentences:
+            summary += " " + sentence
+
+        return summary.strip()
 
 
         #the score of the sentence shows how many significant words (non-stopwords) it contains - the higher the score the more significant words it has thus the more significant it is
