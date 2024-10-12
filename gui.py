@@ -72,7 +72,7 @@ class TextApp(QWidget):
                 color: #000; /* Text color for input field */
             }
             QPushButton {
-                background-color: #006ADC; /* Purple background */
+                background-color: #006ADC; /* Blue background */
                 color: white; /* White text */
                 border: none; /* No border */
                 border-radius: 5px; /* Rounded corners */
@@ -81,7 +81,7 @@ class TextApp(QWidget):
                 cursor: pointer; /* Pointer cursor on hover */
             }
             QPushButton:hover {
-                background-color: #00254D; /* Darker purple on hover */
+                background-color: #00254D; /* Darker blue on hover */
             }
             QTextEdit {
                 background-color: white; /* White background for the summary box */
